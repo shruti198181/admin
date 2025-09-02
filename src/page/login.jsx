@@ -7,7 +7,6 @@ export default function Login({onLogin}) {
       email : "",
       password : ""
     }
-
     const [formdata,setformData] = useState(initialState);
     const [error,seterror] = useState("");
 
@@ -57,19 +56,21 @@ export default function Login({onLogin}) {
     return(
         <>
         <div style={{width:'100vw',display:'flex',justifyContent:'center',    height: '100vh',
-alignItems:'center', textAlign:'center'}}>
+alignItems:'center', textAlign:'center' ,backgroundColor:'rgba(69, 57, 65, 1)'}}>
     <div
         style={{
-        
+          width :'500px',
+          height : '700px',
           padding: '30px',
           borderRadius: '10px',
           boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
           textAlign: 'center',
-          backgroundColor: 'wheat',
+          backgroundColor: 'rgba(219, 219, 231, 1)',
           
         }}
       >
-            <h1>Login Form</h1>
+             
+            <h1 style={{marginTop: '250px'}}>Login Form</h1>
             <label style={{fontWeight:'bold',fontSize: '20px'}}>Email :</label>
             <input className="form-control my-3" type="text" onChange={handleChange} name='email'  value={formdata.email} onBlur={validEmail} placeholder="Enter Email id" style={{marginLeft:'30px',backgroundColor:'lightgray',color:'black',width:'200px',height:'30px',borderRadius:'5px',borderColor:'blue',fontSize:'15px'}}/>
    {error && <p className='text-danger'>{error}</p>}
@@ -81,6 +82,7 @@ alignItems:'center', textAlign:'center'}}>
                 <select
                   value={selectedRole}
                   onChange={(e)=>setselectedRole(e.target.value)}
+                  style={{width:'200px',height:'40px',color:'seagreen',fontSize:'20px',ontWeight:'bold',ackgroundColor:'whitesmoke'}}
                   >  
                     <option>Admin</option>
                     <option>Manager</option>
