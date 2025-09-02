@@ -74,7 +74,7 @@ alignItems:'center', textAlign:'center'}}>
             <input className="form-control my-3" type="text" onChange={handleChange} name='email'  value={formdata.email} onBlur={validEmail} placeholder="Enter Email id" style={{marginLeft:'30px',backgroundColor:'lightgray',color:'black',width:'200px',height:'30px',borderRadius:'5px',borderColor:'blue',fontSize:'15px'}}/>
    {error && <p className='text-danger'>{error}</p>}
    <p><label  style={{fontWeight:'bold',fontSize: '20px'}}>Password :</label>
-   <input className="form-control my-3" type="password" onChange={handleChange} name='password'  value={formdata.password} onBlur={validPassword} placeholder="Enter password" style={{marginLeft:'15px',backgroundColor:'lightgray',color:'black',width:'200px',height:'30px',borderRadius:'5px',borderColor:'blue',fontSize:'15px'}}/>
+   <input className="form-control my-3" type="password" onChange={handleChange} name='password'  value={formdata.password} onBlur={validPassword} placeholder="Enter password" style={{marginLeft:'15px',backgroundColor:'lightgray',color:'black',width:'200px',height:'33px',borderRadius:'5px',borderColor:'blue',fontSize:'15px'}}/>
    {error && <p className='text-danger'>{error}</p>}</p>
             <form onSubmit={handleSubmit}>
                 <label>Selected Role</label>
