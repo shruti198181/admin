@@ -1,99 +1,102 @@
-import React,{useState} from 'react';
+import React, { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function Login({onLogin}) {
+export default function Login({ onLogin }) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-    const [selectedRole,setselectedRole] = useState("Admin");
-    const initialState = {
-      email : "",
-      password : ""
-    }
-    const [formdata,setformData] = useState(initialState);
-    const [error,seterror] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const handleChange = (e) => {
-      const { name,value} = e.target;
-      setformData ({...formdata ,[name] : value})
+  const validEmail = () => {
+    if (!formData.email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (formData.email.includes("@") && formData.email.endsWith(".com")) {
+      setEmailError("");
+      return true;
+    } else {
+      setEmailError("Please enter a valid email");
+      return false;
     }
-  
-    const validEmail = () => {
-      if(!formdata.email) {
-        seterror("Email must be required");
-        return false;
-      }
-     else if(formdata.email.endsWith(".com") && formdata.email.includes("@")) {
-        seterror("")
-        return true
-      } else {
-        seterror("Please enter valid Email");
-        return false;
-     }
-    }
-    
-    const validPassword = () => {
-       if(!formdata.password) {
-           seterror("Password must be required");
-           return false;
-       }
-       else if(formdata.password.length < 6) {
-        seterror("Password must be atleast 6 haracter");
-        return false;
-       }
-        seterror("");
-        return true;
-    }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isEmailValid = validEmail();
-        const isPassword = validPassword();
-        if (isEmailValid && isPassword) {
-          console.log(formdata);
-          onLogin(selectedRole);
-        }
-        
-    }
+  };
 
-    return(
-        <>
-        <div style={{width:'100vw',display:'flex',justifyContent:'center',    height: '100vh',
-alignItems:'center', textAlign:'center' ,backgroundColor:'rgba(69, 57, 65, 1)'}}>
+  const validPassword = () => {
+    if (!formData.password) {
+      setPasswordError("Password is required");
+      return false;
+    } else if (formData.password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return false;
+    }
+    setPasswordError("");
+    return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validEmail() && validPassword()) {
+      let role = "User"; 
+      if (formData.email === "admin@gmail.com") role = "Admin";
+      else if (formData.email === "manager@gmail.com") role = "Manager";
+        else if(formData.email === "user@gmail.com") role ="User";
+      onLogin(role);
+    }
+  };
+
+  return (
     <div
-        style={{
-          width :'500px',
-          height : '700px',
-          padding: '30px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-          textAlign: 'center',
-          backgroundColor: 'rgba(219, 219, 231, 1)',
-          
-        }}
+      className="d-flex justify-content-center align-items-center"
+      style={{ width: "100vw", height: "100vh", backgroundColor: "#453941" }}
+    >
+      <div
+        className="p-4 rounded shadow"
+        style={{ width: "400px", backgroundColor: "#DBDBE7" }}
       >
-             
-            <h1 style={{marginTop: '250px'}}>Login Form</h1>
-            <label style={{fontWeight:'bold',fontSize: '20px'}}>Email :</label>
-            <input className="form-control my-3" type="text" onChange={handleChange} name='email'  value={formdata.email} onBlur={validEmail} placeholder="Enter Email id" style={{marginLeft:'30px',backgroundColor:'lightgray',color:'black',width:'200px',height:'30px',borderRadius:'5px',borderColor:'blue',fontSize:'15px'}}/>
-   {error && <p className='text-danger'>{error}</p>}
-   <p><label  style={{fontWeight:'bold',fontSize: '20px'}}>Password :</label>
-   <input className="form-control my-3" type="password" onChange={handleChange} name='password'  value={formdata.password} onBlur={validPassword} placeholder="Enter password" style={{marginLeft:'15px',backgroundColor:'lightgray',color:'black',width:'200px',height:'33px',borderRadius:'5px',borderColor:'blue',fontSize:'15px'}}/>
-   {error && <p className='text-danger'>{error}</p>}</p>
-            <form onSubmit={handleSubmit}>
-                <label>Selected Role</label>
-                <select
-                  value={selectedRole}
-                  onChange={(e)=>setselectedRole(e.target.value)}
-                  style={{width:'200px',height:'40px',color:'seagreen',fontSize:'20px',ontWeight:'bold',ackgroundColor:'whitesmoke'}}
-                  >  
-                    <option>Admin</option>
-                    <option>Manager</option>
-                    <option>User</option>
-                 </select><br/>
-                 <button type="submit"
-                 style={{backgroundColor:'blue',marginTop: '10px'}}>Login</button>
-            </form>
-              </div>
-        </div>
-        </>
+        <h2 className="text-center mb-4">Login Form</h2>
+        <form onSubmit={handleSubmit}>
+          {/* Email */}
+          <div className="mb-3">
+            <label className="form-label fw-bold">Email:</label>
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={validEmail}
+              className="form-control"
+              placeholder="Enter Email"
+            />
+            {emailError && <p className="text-danger">{emailError}</p>}
+          </div>
 
-    )
+          {/* Password */}
+          <div className="mb-3">
+            <label className="form-label fw-bold">Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              onBlur={validPassword}
+              className="form-control"
+              placeholder="Enter Password"
+            />
+            {passwordError && <p className="text-danger">{passwordError}</p>}
+          </div>
+
+          {/* Submit button */}
+          <div className="d-grid mt-3">
+            <button type="submit" className="btn btn-primary">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 }
