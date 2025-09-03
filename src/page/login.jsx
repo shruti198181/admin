@@ -18,7 +18,7 @@ const handleForgotPassword = () => {
 
   const handleClick = () => {
     alert(`Password Reset Link to ${email}`)
-      setFormData({ ...formData, email }); // 👈 Set the login page email
+      setFormData({ ...formData, email }); 
 
     setShowModel(false)
   }
