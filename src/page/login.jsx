@@ -1,10 +1,27 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ForgetPasswordModel from './model';
 
 export default function Login({ onLogin }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [email,setEmail] = useState("");
+  const [showModel,setShowModel] = useState(false);
+
+const handleForgotPassword = () => {
+  setEmail(formData.email); 
+  setShowModel(true);       
+};
+
+  const handleClose = () => setShowModel(false);
+
+  const handleClick = () => {
+    alert(`Password Reset Link to ${email}`)
+    setShowModel(false)
+  }
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -104,7 +121,8 @@ export default function Login({ onLogin }) {
             />
             {passwordError && <p className="text-danger mt-1">{passwordError}</p>}
           </div>
-            <p className="mt-5 fs-5"><input type="checkbox"/>Remember Me</p><p className="text-danger ms-3">Forget Password?</p>
+            <p className="mt-5 fs-6"><input type="checkbox"/><span className="ms-2">Remember Me</span><span className="text-danger ms-3" style={{ cursor: "pointer" }}
+              onClick={handleForgotPassword}>Forget Password?</span></p>
 
           {/* Submit button */}
           <div className="d-grid mt-4">
@@ -123,7 +141,12 @@ export default function Login({ onLogin }) {
             </button>
           </div>
         </form>
-      
+           <ForgetPasswordModel 
+            show={showModel}
+            handleClose={handleClose}
+            email={email}
+            setEmail={setEmail}
+            handleClick={handleClick}/>
       </div>
     </div>
   );
