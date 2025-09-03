@@ -75,6 +75,10 @@ const handleForgotPassword = () => {
         background: "linear-gradient(135deg, #6D5BBA, #8D58BF)",
       }}
     >
+      <div>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhytoUZ8DYDPl8w7azpNJxgUDhWf09f9x0pA&s" style={{width:"80vw",height:"100vh" }}/>
+        
+      </div>
       <div
         className="p-5 rounded-4 shadow-lg"
         style={{
