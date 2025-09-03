@@ -76,7 +76,7 @@ const handleForgotPassword = () => {
       }}
     >
       <div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhytoUZ8DYDPl8w7azpNJxgUDhWf09f9x0pA&s" style={{width:"80vw",height:"100vh" }}/>
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-CuyvM3w4mcCBPjh7L4wHkRqFZkRxZ-scpQ&s" style={{width:"80vw",height:"100vh" }}/>
         
       </div>
       <div
