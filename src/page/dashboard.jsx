@@ -41,7 +41,19 @@ function AppSidebar({ currentRole, onSelectRole, onLogout }) {
           </button>
         ))}
       </div>
-
+<button
+        onClick={onLogout}
+        style={{
+           width:'150px', 
+          backgroundColor: "#EF4444",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+          color: "white",
+        }}
+      >
+        Logout
+      </button>
          </div>
   );
 }
@@ -78,20 +90,7 @@ export default function Dashboard({ role, onLogout }) {
 
         {selectedMenu && <p style={{ color: "slategray",fontSize:'25px',fontWeight:'bold' }}>Selected Menu is {selectedMenu}</p>}
 
-         <button
-        onClick={onLogout}
-        style={{
-           width:'200px',
-          padding: "10px",
-          backgroundColor: "#EF4444",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          color: "white",
-        }}
-      >
-        Logout
-      </button>
+         
 
       </div>
     </div>
