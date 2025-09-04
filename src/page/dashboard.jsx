@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import UsersData from "../admins/user";
+import Setting from "../admins/setting";
 
 function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
    const [open, setOpen] = useState(true);
@@ -110,6 +111,10 @@ export default function Dashboard({ role, onLogout }) {
         menus={menus}
         onLogout={onLogout}
         onSelectMenu={setSelectedMenu}
+        onSelectRole={role => {
+          setcurrentRole(role);
+          setSelectedMenu(""); // reset menu when role changes
+        }}
       />
 
       <div
@@ -127,7 +132,7 @@ export default function Dashboard({ role, onLogout }) {
         </h2>
 
         {selectedMenu === "Users" && <UsersData/> }
-         {selectedMenu === "Setting" && <p>⚙️ Settings Table</p>}
+         {selectedMenu === "Setting" && <Setting/>}
         {selectedMenu === "Reports" && <p>📊 Reports Table</p>}
 
         {selectedMenu === "Projects" && <p>📁 Projects Table</p>}
