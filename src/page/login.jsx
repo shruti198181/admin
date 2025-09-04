@@ -68,17 +68,18 @@ const handleForgotPassword = () => {
 
   return (
     <div
-      className="d-flex justify-content-end align-items-top"
+      className="d-flex justify-content-center align-items-center"
       style={{
         width: "100vw",
         height: "100vh",
-        background: "linear-gradient(135deg, #6D5BBA, #8D58BF)",
+        backgroundImage :"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-CuyvM3w4mcCBPjh7L4wHkRqFZkRxZ-scpQ&s')",
+          backgroundSize: "cover",
+          backgroundPosition: 'center',
+          backgroundRepeat:'no-repeat',
+        
       }}
     >
-      <div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-CuyvM3w4mcCBPjh7L4wHkRqFZkRxZ-scpQ&s" style={{width:"80vw",height:"100vh" }}/>
-        
-      </div>
+      
       <div
         className="p-5 rounded-4 shadow-lg"
         style={{
@@ -86,6 +87,7 @@ const handleForgotPassword = () => {
           backgroundColor: "white",
           borderRadius: "15px",
           boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+          
         }}
       >
         <h2 className="text-center mb-4 fw-bold" style={{ color: "#a82729ff" }}>

@@ -1,13 +1,13 @@
+import { useState, useMemo } from "react";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 
-import { useMemo, useState } from "react";
-import Navbar from "../component/navbar";
+function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
+   const [open, setOpen] = useState(true);
 
-function AppSidebar({ currentRole, onSelectRole, onLogout }) {
-  const roles = ["Admin", "Manager", "User"];
   return (
     <div
       style={{
-        width: "200px",
+        width: "220px",
         height: "100vh",
         backgroundColor: "#1F2937",
         color: "white",
@@ -18,43 +18,75 @@ function AppSidebar({ currentRole, onSelectRole, onLogout }) {
       }}
     >
       <div>
-        <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "20px" }}>
+      <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: "bold",
+            marginBottom: "20px",
+          }}
+        >
           Dashboard
         </h2>
-        {roles.map((role) => (
-          <button
-            key={role}
-            onClick={() => onSelectRole(role)}
-            style={{
-              width: "100%",
-              textAlign: "left",
-              padding: "10px",
-              marginBottom: "10px",
-              backgroundColor: currentRole === role ? "#374151" : "transparent",
-              border: "none",
-              borderRadius: "5px",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            {role}
-          </button>
-        ))}
+        <h3
+          style={{
+            fontSize: "18px",
+            fontWeight: "bold",
+            marginBottom: "15px",
+            cursor: "pointer",
+          }}
+          onClick={() => setOpen(!open)}
+        >
+          {currentRole} ▾
+        </h3>
+        {open &&
+          menus.map((menu) => (
+            <button
+              key={menu}
+              onClick={() => onSelectMenu(menu)}
+              style={{
+                width: "100%",
+                textAlign: "left",
+                padding: "10px",
+                marginBottom: "8px",
+                backgroundColor: "transparent",
+                border: "none",
+                borderRadius: "5px",
+                color: "white",
+                cursor: "pointer",
+                transition: "0.3s",
+              }}
+              onMouseEnter={(e) =>
+                (e.target.style.backgroundColor = "#374151")
+              }
+              onMouseLeave={(e) =>
+                (e.target.style.backgroundColor = "transparent")
+              }
+            >
+              {menu}
+            </button>
+          ))}
       </div>
-<button
+      
+      <button
         onClick={onLogout}
         style={{
-           width:'150px', 
+          width: "150px",
           backgroundColor: "#EF4444",
           border: "none",
           borderRadius: "5px",
           cursor: "pointer",
           color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "5px",
+          padding: "8px",
         }}
       >
+        <BsBoxArrowUpRight />
         Logout
       </button>
-         </div>
+    </div>
   );
 }
 
@@ -66,13 +98,18 @@ const RoleMenu = {
 
 export default function Dashboard({ role, onLogout }) {
   const [selectedMenu, setSelectedMenu] = useState("");
-  const [currentRole, setCurrentRole] = useState(role);
+  const [currentRole] = useState(role);
 
   const menus = useMemo(() => RoleMenu[currentRole] ?? [], [currentRole]);
 
   return (
     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-      <AppSidebar currentRole={currentRole} onSelectRole={setCurrentRole} onLogout={onLogout} />
+      <AppSidebar
+        currentRole={currentRole}
+        menus={menus}
+        onLogout={onLogout}
+        onSelectMenu={setSelectedMenu}
+      />
 
       <div
         style={{
@@ -84,14 +121,21 @@ export default function Dashboard({ role, onLogout }) {
           gap: "20px",
         }}
       >
-        <h2 style={{ margin: 0 ,color: 'rgba(70, 12, 12, 1)'}}>{currentRole} Dashboard</h2>
+        <h2 style={{ margin: 0, color: "rgba(70, 12, 12, 1)" }}>
+          {currentRole} Dashboard
+        </h2>
 
-     <div style={{backgroundColorolor:'rgba(222, 142, 22, 1)'}}> <Navbar menus={menus} onselect={setSelectedMenu} /></div>  
-
-        {selectedMenu && <p style={{ color: "slategray",fontSize:'25px',fontWeight:'bold' }}>Selected Menu is {selectedMenu}</p>}
-
-         
-
+        {selectedMenu && (
+          <p
+            style={{
+              color: "slategray",
+              fontSize: "25px",
+              fontWeight: "bold",
+            }}
+          >
+            Selected Menu: {selectedMenu}
+          </p>
+        )}
       </div>
     </div>
   );
