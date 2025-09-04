@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import UsersData from "../admins/user";
 
 function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
    const [open, setOpen] = useState(true);
@@ -66,7 +67,7 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
             </button>
           ))}
       </div>
-      
+
       <button
         onClick={onLogout}
         style={{
@@ -125,18 +126,16 @@ export default function Dashboard({ role, onLogout }) {
           {currentRole} Dashboard
         </h2>
 
-        {selectedMenu && (
-          <p
-            style={{
-              color: "slategray",
-              fontSize: "25px",
-              fontWeight: "bold",
-            }}
-          >
-            Selected Menu: {selectedMenu}
-          </p>
-        )}
-      </div>
+        {selectedMenu === "Users" && <UsersData/> }
+         {selectedMenu === "Setting" && <p>⚙️ Settings Table</p>}
+        {selectedMenu === "Reports" && <p>📊 Reports Table</p>}
+
+        {selectedMenu === "Projects" && <p>📁 Projects Table</p>}
+        {selectedMenu === "Team" && <p>👥 Team Table</p>}
+
+        {selectedMenu === "My Profile" && <p>🙋 My Profile Info</p>}
+        {selectedMenu === "Task" && <p>✅ Task Table</p>}
+                  </div>
     </div>
   );
 }
