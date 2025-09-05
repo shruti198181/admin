@@ -1,9 +1,7 @@
-
-                   import React from "react";
+ import React from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,8 +10,9 @@ import {
 
 export default function UsersData() {
   return (
-    <div className="p-4">
-      <Table className="border border-gray-300">
+<div style={{display:'flex', flexDirection:'column',justifyContent:'center',alignItems:'center',}}>
+<div style={{fontSize:'30px',fontWeight:'bold',color:'rgba(28, 22, 119, 1)'}}>User Admin</div>
+      <Table className="border border-gray-300 mt-5">
         <TableHeader>
           <TableRow className="border border-gray-300">
             <TableHead className="border border-gray-300 w-[50px]">ID</TableHead>
@@ -45,7 +44,6 @@ export default function UsersData() {
             <TableCell className="border border-gray-300">9825825515</TableCell>
             <TableCell className="border border-gray-300">Pune</TableCell>
           </TableRow>
-
         </TableBody>
       </Table>
     </div>
