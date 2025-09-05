@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import UsersData from "../admins/user";
 import Setting from "../admins/setting";
+import Reports from '../admins/reports'
 
 function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
    const [open, setOpen] = useState(true);
@@ -133,7 +134,7 @@ export default function Dashboard({ role, onLogout }) {
 
         {selectedMenu === "Users" && <UsersData/> }
          {selectedMenu === "Setting" && <Setting/>}
-        {selectedMenu === "Reports" && <p>📊 Reports Table</p>}
+        {selectedMenu === "Reports" && <Reports/>}
 
         {selectedMenu === "Projects" && <p>📁 Projects Table</p>}
         {selectedMenu === "Team" && <p>👥 Team Table</p>}
