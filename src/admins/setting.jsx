@@ -34,7 +34,7 @@ const Setting = () => {
       </div>
       <button
         onClick={handleSave}
-        className="bg-blue-500 text-black px-4 py-2 rounded"
+        className="bg-blue-500 text-blue-600 px-4 py-2 rounded"
       >
         Save Settings
       </button>
