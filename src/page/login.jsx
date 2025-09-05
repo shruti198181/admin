@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ForgetPasswordModel from './model';
+import NavbarHeader from "../component/header";
+
 
 export default function Login({ onLogin }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -79,6 +81,7 @@ const handleForgotPassword = () => {
         
       }}
     >
+      <NavbarHeader/>
       
       <div
         className="p-5 rounded-4 shadow-lg"

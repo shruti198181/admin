@@ -5,11 +5,14 @@ import Setting from "../admins/setting";
 import Reports from '../admins/reports';
 import Projects from "../manager/project";
 import Team from '../manager/team';
+import ManagerReport from "../manager/mreport";
+import NavbarHeader from '../component/header'
 
 function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
    const [open, setOpen] = useState(true);
 
   return (
+    
     <div
       style={{
         width: "220px",
@@ -22,6 +25,7 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
         padding: "10px",
       }}
     >
+      
       <div>
       <h2
           style={{
@@ -103,19 +107,19 @@ const RoleMenu = {
 
 export default function Dashboard({ role, onLogout }) {
   const [selectedMenu, setSelectedMenu] = useState("");
-  const [currentRole] = useState(role);
+const [currentRole, setCurrentRole] = useState(role);
 
   const menus = useMemo(() => RoleMenu[currentRole] ?? [], [currentRole]);
 
   return (
     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-      <AppSidebar
+           <AppSidebar
         currentRole={currentRole}
         menus={menus}
         onLogout={onLogout}
         onSelectMenu={setSelectedMenu}
         onSelectRole={role => {
-          setcurrentRole(role);
+          setCurrentRole(role);
           setSelectedMenu(""); // reset menu when role changes
         }}
       />
@@ -136,10 +140,11 @@ export default function Dashboard({ role, onLogout }) {
 
         {selectedMenu === "Users" && <UsersData/> }
          {selectedMenu === "Setting" && <Setting/>}
-        {selectedMenu === "Reports" && <Reports/>}
+        {selectedMenu === "Reports" && currentRole === "Admin" && <Reports/>}
 
         {selectedMenu === "Projects" && <Projects/>}
         {selectedMenu === "Team" && <Team/>}
+        {selectedMenu === "Reports"   && currentRole === "Manager"&& <ManagerReport/>}
 
         {selectedMenu === "My Profile" && <p>🙋 My Profile Info</p>}
         {selectedMenu === "Task" && <p>✅ Task Table</p>}
