@@ -177,36 +177,27 @@ export default function UsersData() {
         <p>Loading...</p>
       ) : (
         <>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Body</TableHead>
-                <TableHead>User ID</TableHead>
-              </TableRow>
-            </TableHeader>
+          <Table className="border border-gray-300">
+  <TableHeader>
+    <TableRow className="border-b border-gray-300">
+      <TableHead className="border border-gray-300">ID</TableHead>
+      <TableHead className="border border-gray-300">Title</TableHead>
+      <TableHead className="border border-gray-300">Body</TableHead>
+      <TableHead className="border border-gray-300">User ID</TableHead>
+    </TableRow>
+  </TableHeader>
 
-            <TableBody>
-              {users.length > 0 ? (
-                users.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell>{user.id}</TableCell>
-                    <TableCell>{user.title}</TableCell>
-                    <TableCell>{user.body}</TableCell>
-                    <TableCell>{user.userId}</TableCell>
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center">
-                    No users found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-
+  <TableBody>
+    {users.map((user) => (
+      <TableRow key={user.id} className="border-b border-gray-300">
+        <TableCell className="border border-gray-300">{user.id}</TableCell>
+        <TableCell className="border border-gray-300">{user.title}</TableCell>
+        <TableCell className="border border-gray-300">{user.body}</TableCell>
+        <TableCell className="border border-gray-300">{user.userId}</TableCell>
+      </TableRow>
+    ))}
+  </TableBody>
+</Table>
           {/* Pagination */}
           <div className="flex justify-center items-center mt-4 gap-2">
             <button
