@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import NavbarHeader from "../component/header";
 import UsersData from "../admins/user";
 import Setting from "../admins/setting";
 import Reports from "../admins/reports";
@@ -100,7 +99,6 @@ export default function Dashboard({ role, onLogout }) {
 
   return (
     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
-     
       <AppSidebar
         currentRole={currentRole}
         menus={menus}

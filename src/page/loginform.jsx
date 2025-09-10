@@ -1,34 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavbarHeader from "../component/header";
-import ForgetPasswordModel from "./model";
 
 export default function LoginForm({ setRole }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [email, setEmail] = useState("");
-  const [showModel, setShowModel] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleForgotPassword = () => {
-    setEmail(formData.email);
-    setShowModel(true);
-  };
-
-  const handleClose = () => setShowModel(false);
-
-  const handleClick = () => {
-    alert(`Password Reset Link to ${email}`);
-    setFormData({ ...formData, email });
-    setShowModel(false);
-  };
-
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Email validation
   const validEmail = () => {
     if (!formData.email) {
       setEmailError("Email is required");
@@ -42,6 +28,7 @@ export default function LoginForm({ setRole }) {
     }
   };
 
+  // Password validation
   const validPassword = () => {
     if (!formData.password) {
       setPasswordError("Password is required");
@@ -54,44 +41,46 @@ export default function LoginForm({ setRole }) {
     return true;
   };
 
+  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validEmail() && validPassword()) {
-      let role = "admin";
+      // Determine role
+      let role = null;
       if (formData.email === "admin@gmail.com") role = "admin";
       else if (formData.email === "manager@gmail.com") role = "manager";
       else if (formData.email === "user@gmail.com") role = "user";
 
-      setRole(role);        // ✅ update role in App.jsx
-      navigate(`/${role}`); // ✅ redirect to correct page
+      if (role) {
+        setRole(role); // update role in App.jsx
+      } else {
+        alert("Invalid email. Use admin@gmail.com, manager@gmail.com or user@gmail.com");
+      }
     }
   };
 
   return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{
-        width: "100vw",
-        height: "100vh",
-        backgroundImage:
-          "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-CuyvM3w4mcCBPjh7L4wHkRqFZkRxZ-scpQ&s')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <NavbarHeader />
-
-      <div
-        className="p-5 rounded-4 shadow-lg"
-        style={{
-          width: "400px",
-          backgroundColor: "white",
-          borderRadius: "15px",
-          boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
-        }}
-      >
-        <h2 className="text-center mb-4 fw-bold" style={{ color: "#a82729ff" }}>
+    // <div
+    //   style={{
+    //     width: "100vw",
+    //     height: "100vh",
+    //     backgroundImage:
+    //       "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-CuyvM3w4mcCBPjh7L4wHkRqFZkRxZ-scpQ&s')",
+    //     backgroundSize: "cover",
+    //     backgroundPosition: "center",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //   }}
+    // >
+      <div>
+        <h2
+          style={{
+            color: "#a82729ff",
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
           Login
         </h2>
 
@@ -105,9 +94,8 @@ export default function LoginForm({ setRole }) {
               value={formData.email}
               onChange={handleChange}
               onBlur={validEmail}
-              className="form-control shadow-sm"
+              className="form-control"
               placeholder="Enter your email"
-              style={{ borderRadius: "10px" }}
             />
             {emailError && <p className="text-danger mt-1">{emailError}</p>}
           </div>
@@ -121,51 +109,24 @@ export default function LoginForm({ setRole }) {
               value={formData.password}
               onChange={handleChange}
               onBlur={validPassword}
-              className="form-control shadow-sm"
+              className="form-control"
               placeholder="Enter your password"
-              style={{ borderRadius: "10px" }}
             />
             {passwordError && <p className="text-danger mt-1">{passwordError}</p>}
           </div>
 
-          <p className="mt-5 fs-6">
-            <input type="checkbox" />
-            <span className="ms-2">Remember Me</span>
-            <span
-              className="text-danger ms-3"
-              style={{ cursor: "pointer" }}
-              onClick={handleForgotPassword}
-            >
-              Forget Password?
-            </span>
-          </p>
-
-          {/* Submit button */}
+          {/* Submit */}
           <div className="d-grid mt-4">
             <button
               type="submit"
-              className="btn btn-gradient btn-lg fw-bold"
-              style={{
-                background: "linear-gradient(90deg, #6D5BBA, #8D58BF)",
-                color: "white",
-                borderRadius: "10px",
-                boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
-                transition: "0.3s",
-              }}
+              className="btn btn-primary"
+              style={{ borderRadius: "10px", padding: "10px", fontWeight: "bold" }}
             >
               Login
             </button>
           </div>
         </form>
-
-        <ForgetPasswordModel
-          show={showModel}
-          handleClose={handleClose}
-          email={email}
-          setEmail={setEmail}
-          handleClick={handleClick}
-        />
       </div>
-    </div>
+    // </div>
   );
 }
