@@ -27,11 +27,11 @@ export default function UsersData() {
         `https://jsonplaceholder.typicode.com/posts?_start=${start}&_limit=${limit}`
       );
 
-      // API returns array directly
+    
       setUsers(response.data);
 
-      // JSONPlaceholder doesn't return total count, simulate it
-      setTotalUsers(100); // total 100 posts in placeholder
+      
+      setTotalUsers(100);
     } catch (error) {
       console.error("Error fetching users:", error);
       setUsers([]);
