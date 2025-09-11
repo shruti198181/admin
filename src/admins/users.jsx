@@ -48,13 +48,13 @@ export default function UsersData() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Users</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Users</h2>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          <Table className="border border-gray-300">
+          <Table className="border border-gray-300 border-collapse min-w-[700px] mx-auto scrollbar-none">
   <TableHeader>
     <TableRow className="border-b border-gray-300 text-primary text-center">
       <TableHead className="border border-gray-300">ID</TableHead>
