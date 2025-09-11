@@ -1,51 +1,110 @@
-import React from "react"
+"use client";
+
+import React, { useState, useEffect } from "react";
 import {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableBody,
   TableRow,
-} from "../component/table"
+  TableHead,
+  TableCell,
+} from "../component/table";
 
-export default function Reports() {
-  const reports = [
-    { id: 1, reportName: "User Activity", createdBy: "Admin", createdDate: "2025-09-01", status: "Completed" },
-    { id: 2, reportName: "System Logs", createdBy: "Admin", createdDate: "2025-09-02", status: "Pending" },
-    { id: 3, reportName: "Monthly Sales", createdBy: "Admin", createdDate: "2025-09-03", status: "In Progress" },
-    { id :4, reportName :"Yearly Sales", createdBy :"Admin",createdDate : "2025-09-04", status :"completed"},
-  ]
+export default function Report() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users/1/todos")
+      .then((res) => res.json())
+      .then((json) => setData(json))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const totalPages = Math.ceil(data.length / limit);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const currentTodos = data.slice((page - 1) * limit, page * limit);
+
+  if (loading) return <p style={{ padding: "20px" }}>Loading todos...</p>;
 
   return (
-    <div style={{display:'flex', flexDirection:'column',justifyContent:'center',alignItems:'center',}}>
-      <h2 className="text-2xl font-bold text-center mb-6 text-bule-900">Reports</h2>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">User Todos Report</h2>
 
-      {/* ✅ This div ensures the table is in the middle */}
-      <div className="flex justify-center w-full">
-        <Table className="border border-gray-300 rounded-lg w-auto mt-5">
-          
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[60px] text-center border border-gray-300">ID</TableHead>
-              <TableHead className="border border-gray-300">Report Name</TableHead>
-              <TableHead className="border border-gray-300"> Created By</TableHead>
-              <TableHead className="border border-gray-300">Created Date</TableHead>
-              <TableHead className="border border-gray-300">Status</TableHead>
+      <Table className="border border-gray-300 border-collapse w-full">
+        <TableHeader>
+          <TableRow className="bg-gray-100">
+            <TableHead className="border border-gray-300 p-2 text-center">ID</TableHead>
+            <TableHead className="border border-gray-300 p-2 text-center">User ID</TableHead>
+            <TableHead className="border border-gray-300 p-2 text-left">Title</TableHead>
+            <TableHead className="border border-gray-300 p-2 text-center">Completed</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {currentTodos.map((todo) => (
+            <TableRow key={todo.id} className="hover:bg-gray-50">
+              <TableCell className="border border-gray-300 p-2 text-center">{todo.id}</TableCell>
+              <TableCell className="border border-gray-300 p-2 text-center">{todo.userId}</TableCell>
+              <TableCell className="border border-gray-300 p-2">{todo.title}</TableCell>
+              <TableCell className="border border-gray-300 p-2 text-center">
+                <button
+                  onClick={() => {
+                    const updatedData = data.map((t) =>
+                      t.id === todo.id ? { ...t, completed: !t.completed } : t
+                    );
+                    setData(updatedData);
+                  }}
+                  style={{
+                    padding: "5px 15px",
+                    borderRadius: "9999px",
+                    fontWeight: "600",
+                    color: "#fff",
+                    border: "none",
+                    cursor: "pointer",
+                    backgroundColor: todo.completed ? "#28a745" : "#dc3545",
+                    transition: "background-color 0.2s",
+                  }}
+                >
+                  {todo.completed ? "Completed" : "Not Completed"}
+                </button>
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {reports.map((report) => (
-              <TableRow key={report.id}>
-                <TableCell className="text-center font-medium border border-gray-300">{report.id}</TableCell>
-                <TableCell className="border border-gray-300">{report.reportName}</TableCell>
-                <TableCell className="border border-gray-300">{report.createdBy}</TableCell>
-                <TableCell className="border border-gray-300">{report.createdDate}</TableCell>
-                <TableCell className="border border-gray-600">{report.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+          ))}
+        </TableBody>
+      </Table>
+
+      {/* Pagination */}
+      <div className="flex justify-center items-center mt-4 gap-2">
+        <button
+          className="btn btn-sm btn-primary"
+          disabled={page === 1}
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+        >
+          Previous
+        </button>
+
+        {pages.map((p) => (
+          <button
+            key={p}
+            className={`btn btn-sm ${p === page ? "btn-secondary" : "btn-outline"}`}
+            onClick={() => setPage(p)}
+          >
+            {p}
+          </button>
+        ))}
+
+        <button
+          className="btn btn-sm btn-primary"
+          disabled={page === totalPages}
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+        >
+          Next
+        </button>
       </div>
     </div>
-  )
+  );
 }
