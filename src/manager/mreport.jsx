@@ -1,3 +1,8 @@
+
+
+"use client";
+
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -5,53 +10,58 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../component/table"
+} from "../component/table"; // adjust import path
+// ❌ removed lucide-react since you had errors
 
-export default function ManagerReport() {
-  const reports = [
-    { id: 1, name: "Rahul Patel", department: "Sales", totalSales: 120, projects: 5, performance: "Excellent" },
-    { id: 2, name: "Smit Shaha", department: "Marketing", totalSales: 95, projects: 3, performance: "Good" },
-    { id: 3, name: "John Dave", department: "Operations", totalSales: 80, projects: 4, performance: "Average" },
-  ]
+export default function UsersTable() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((json) => setUsers(json))
+      .catch((err) => console.error("Fetch error:", err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <div className="p-6 text-center">Loading...</div>;
+  }
 
   return (
-    <div style={{display :'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-      <h2 className="text-2xl font-bold mb-6"> Manager Report</h2>
-
-      <Table className="border rounded-lg shadow w-full max-w-5xl mt-5">
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4">Manager Report</h2>
+      <Table className="border border-gray-300">
         <TableHeader>
-          <TableRow>
-            <TableHead className="border text-center">ID</TableHead>
-            <TableHead className="border text-center">Name</TableHead>
-            <TableHead className="border text-center">Department</TableHead>
-            <TableHead className="border text-center">Total Sales</TableHead>
-            <TableHead className="border text-center">Projects</TableHead>
-            <TableHead className="border text-center">Performance</TableHead>
+          <TableRow className="border-b border-gray-300">
+            <TableHead className="border-r border-gray-300">ID</TableHead>
+            <TableHead className="border-r border-gray-300">Name</TableHead>
+            <TableHead className="border-r border-gray-300">Email</TableHead>
+            <TableHead className="border-r border-gray-300">Phone</TableHead>
+            <TableHead>City</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {reports.map((report) => (
-            <TableRow key={report.id}>
-              <TableCell className="border text-center">{report.id}</TableCell>
-              <TableCell className="border text-center">{report.name}</TableCell>
-              <TableCell className="border text-center">{report.department}</TableCell>
-              <TableCell className="border text-center">{report.totalSales}</TableCell>
-              <TableCell className="border text-center">{report.projects}</TableCell>
-              <TableCell
-                className={`border text-center font-semibold ${
-                  report.performance === "Excellent"
-                    ? "text-green-600"
-                    : report.performance === "Good"
-                    ? "text-blue-600"
-                    : "text-yellow-600"
-                }`}
-              >
-                {report.performance}
+          {users.map((user) => (
+            <TableRow key={user.id} className="border-b border-gray-300">
+              <TableCell className="border-r border-gray-300">
+                {user.id}
               </TableCell>
+              <TableCell className="border-r border-gray-300">
+                {user.name}
+              </TableCell>
+              <TableCell className="border-r border-gray-300">
+                {user.email}
+              </TableCell>
+              <TableCell className="border-r border-gray-300">
+                {user.phone}
+              </TableCell>
+              <TableCell>{user.address?.city}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
