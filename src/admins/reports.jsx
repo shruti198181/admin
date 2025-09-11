@@ -30,57 +30,59 @@ export default function Report() {
 
   if (loading) return <p style={{ padding: "20px" }}>Loading todos...</p>;
 
-  return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">User Todos Report</h2>
+    return (
+    <div className="p-4 flex flex-col items-center">
+      <h2 className="text-2xl font-bold mb-4 text-center">User Todos Report</h2>
 
-      <Table className="border border-gray-300 border-collapse w-full">
-        <TableHeader>
-          <TableRow className="bg-gray-100">
-            <TableHead className="border border-gray-300 p-2 text-center">ID</TableHead>
-            <TableHead className="border border-gray-300 p-2 text-center">User ID</TableHead>
-            <TableHead className="border border-gray-300 p-2 text-left">Title</TableHead>
-            <TableHead className="border border-gray-300 p-2 text-center">Completed</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {currentTodos.map((todo) => (
-            <TableRow key={todo.id} className="hover:bg-gray-50">
-              <TableCell className="border border-gray-300 p-2 text-center">{todo.id}</TableCell>
-              <TableCell className="border border-gray-300 p-2 text-center">{todo.userId}</TableCell>
-              <TableCell className="border border-gray-300 p-2">{todo.title}</TableCell>
-              <TableCell className="border border-gray-300 p-2 text-center">
-                <button
-                  onClick={() => {
-                    const updatedData = data.map((t) =>
-                      t.id === todo.id ? { ...t, completed: !t.completed } : t
-                    );
-                    setData(updatedData);
-                  }}
-                  style={{
-                    padding: "5px 15px",
-                    borderRadius: "9999px",
-                    fontWeight: "600",
-                    color: "#fff",
-                    border: "none",
-                    cursor: "pointer",
-                    backgroundColor: todo.completed ? "#28a745" : "#dc3545",
-                    transition: "background-color 0.2s",
-                  }}
-                >
-                  {todo.completed ? "Completed" : "Not Completed"}
-                </button>
-              </TableCell>
+      <div className="overflow-x-auto w-full">
+        <Table className="border border-gray-300 border-collapse min-w-[700px] mx-auto">
+          <TableHeader>
+            <TableRow className="bg-gray-100">
+              <TableHead className="border border-gray-300 p-2 text-center">ID</TableHead>
+              <TableHead className="border border-gray-300 p-2 text-center">User ID</TableHead>
+              <TableHead className="border border-gray-300 p-2 text-left">Title</TableHead>
+              <TableHead className="border border-gray-300 p-2 text-center">Completed</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <TableBody>
+            {currentTodos.map((todo) => (
+              <TableRow key={todo.id} className="hover:bg-gray-50">
+                <TableCell className="border border-gray-300 p-2 text-center">{todo.id}</TableCell>
+                <TableCell className="border border-gray-300 p-2 text-center">{todo.userId}</TableCell>
+                <TableCell className="border border-gray-300 p-2">{todo.title}</TableCell>
+                <TableCell className="border border-gray-300 p-2 text-center">
+                  <button
+                    onClick={() => {
+                      const updatedData = data.map((t) =>
+                        t.id === todo.id ? { ...t, completed: !t.completed } : t
+                      );
+                      setData(updatedData);
+                    }}
+                    style={{
+                      padding: "5px 15px",
+                      borderRadius: "9999px",
+                      fontWeight: "600",
+                      color: "#fff",
+                      border: "none",
+                      cursor: "pointer",
+                      backgroundColor: todo.completed ? "#28a745" : "#dc3545",
+                      transition: "background-color 0.2s",
+                    }}
+                  >
+                    {todo.completed ? "Completed" : "Not Completed"}
+                  </button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center mt-4 gap-2">
+      <div className="flex justify-center items-center mt-4 gap-2   text-center">
         <button
-          className="btn btn-sm btn-primary"
+          className={`btn btn-sm btn-primary ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === 1}
           onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
         >
@@ -98,7 +100,7 @@ export default function Report() {
         ))}
 
         <button
-          className="btn btn-sm btn-primary"
+          className={`btn btn-sm btn-primary ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === totalPages}
           onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
         >
