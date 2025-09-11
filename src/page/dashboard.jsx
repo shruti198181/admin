@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import UsersData from "../admins/user";
+import UsersData from "../admins/users";
 import Setting from "../admins/setting";
 import Reports from "../admins/reports";
 import Projects from "../manager/project";

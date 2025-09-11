@@ -4,14 +4,14 @@ import { Modal, Button } from "react-bootstrap";
 import NavbarHeader from "./component/header";
 import LoginForm from "./page/loginform";
 import Dashboard from "./page/dashboard";
-import UsersData from "./admins/user";
+import UsersData from "./admins/users";
 import Setting from "./admins/setting";
 import Reports from "./admins/reports";
 import Projects from "./manager/project";
 import Team from "./manager/team";
 import ManagerReport from "./manager/mreport";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TestImages from "./abc";
+
 export default function App() {
   const [role, setRole] = useState(null);
   const [showLogin, setShowLogin] = useState(true); // show login on first load
@@ -80,7 +80,7 @@ export default function App() {
 
         {/* Admin routes */}
         <Route
-          path="/admin/user"
+          path="/admin/users"
           element={role === "admin" ? <UsersData /> : <Navigate to="/" />}
         />
         <Route
@@ -105,10 +105,17 @@ export default function App() {
           path="/manager/reports"
           element={role === "manager" ? <ManagerReport /> : <Navigate to="/" />}
         />
+        {/* <Route 
+        path="/user/myprofile"
+        element={role==="user" ? <MyProfile/> : <Navigate to="/"/>}/>
+
+<Route 
+        path="/user/task"
+        element={role==="user" ? <Task/> : <Navigate to="/"/>}/> */}
 
         {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path ="/abc" element= {<TestImages/> }/>
+        
       </Routes>
     </>
   );
