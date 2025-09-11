@@ -56,7 +56,7 @@ export default function UsersData() {
         <>
           <Table className="border border-gray-300">
   <TableHeader>
-    <TableRow className="border-b border-gray-300">
+    <TableRow className="border-b border-gray-300 text-primary text-center">
       <TableHead className="border border-gray-300">ID</TableHead>
       <TableHead className="border border-gray-300">Title</TableHead>
       <TableHead className="border border-gray-300">Body</TableHead>

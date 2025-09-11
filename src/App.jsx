@@ -11,7 +11,7 @@ import Projects from "./manager/project";
 import Team from "./manager/team";
 import ManagerReport from "./manager/mreport";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import TestImages from "./abc";
 export default function App() {
   const [role, setRole] = useState(null);
   const [showLogin, setShowLogin] = useState(true); // show login on first load
@@ -108,6 +108,7 @@ export default function App() {
 
         {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path ="/abc" element= {<TestImages/> }/>
       </Routes>
     </>
   );
