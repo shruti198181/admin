@@ -8,7 +8,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
-} from "../component/table"; // adjust path if needed
+} from "../component/table"; 
 
 export default function AlbumPhotos() {
   const [photos, setPhotos] = useState([]);
@@ -44,7 +44,7 @@ export default function AlbumPhotos() {
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4 text-center">Album Photos</h2>
 
-      <Table className="border border-gray-300 text-center border-collapse min-w-[700px]">
+      <Table className="border border-gray-300 text-center border-collapse min-w-[700px] mx-auto">
         <TableHeader>
           <TableRow>
             <TableHead className="border border-gray-300">ID</TableHead>
@@ -71,7 +71,7 @@ export default function AlbumPhotos() {
         </TableBody>
       </Table>
 
-      {/* ✅ Pagination Controls */}
+      
       <div className="flex justify-center items-center mt-4 gap-2 text-center">
         <button
           className={`px-3 py-1 border rounded ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
