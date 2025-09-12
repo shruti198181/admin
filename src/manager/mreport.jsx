@@ -31,33 +31,33 @@ export default function UsersTable() {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Manager Report</h2>
-      <Table className="border border-gray-300">
+      <h2 className="text-xl font-bold mb-4 text-center">Manager Report</h2>
+      <Table className="border border-gray-300 text-center border-collapse min-w-[700px] mx-auto">
         <TableHeader>
-          <TableRow className="border-b border-gray-300">
-            <TableHead className="border-r border-gray-300">ID</TableHead>
-            <TableHead className="border-r border-gray-300">Name</TableHead>
-            <TableHead className="border-r border-gray-300">Email</TableHead>
-            <TableHead className="border-r border-gray-300">Phone</TableHead>
+          <TableRow className="border border-gray-300">
+            <TableHead className="border border-gray-300">ID</TableHead>
+            <TableHead className="border border-gray-300">Name</TableHead>
+            <TableHead className="border border-gray-300">Email</TableHead>
+            <TableHead className="border border-gray-300">Phone</TableHead>
             <TableHead>City</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {users.map((user) => (
             <TableRow key={user.id} className="border-b border-gray-300">
-              <TableCell className="border-r border-gray-300">
+              <TableCell className="border border-gray-300">
                 {user.id}
               </TableCell>
-              <TableCell className="border-r border-gray-300">
+              <TableCell className="border border-gray-300">
                 {user.name}
               </TableCell>
-              <TableCell className="border-r border-gray-300">
+              <TableCell className="border border-gray-300">
                 {user.email}
               </TableCell>
-              <TableCell className="border-r border-gray-300">
+              <TableCell className="border border-gray-300">
                 {user.phone}
               </TableCell>
-              <TableCell>{user.address?.city}</TableCell>
+              <TableCell className="border border-gray-300">{user.address?.city}</TableCell>
             </TableRow>
           ))}
         </TableBody>
