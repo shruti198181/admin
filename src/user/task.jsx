@@ -1,86 +1,250 @@
+// "use client";
+
+// import React, { useEffect, useState } from "react";
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from "../component/table"; 
+// import "bootstrap/dist/css/bootstrap.min.css";
+
+// export default function Task() {
+//   const [users, setUsers] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     fetch("https://jsonplaceholder.typicode.com/users")
+//       .then((response) => response.json())
+//       .then((json) => setUsers(json))
+//       .catch((err) => console.error("Fetch error:", err))
+//       .finally(() => setLoading(false));
+//   }, []);
+
+//   // ✅ Delete handler
+//   const handleDelete = async (id) => {
+//     try {
+//       const res = await fetch(
+//         `https://jsonplaceholder.typicode.com/users/${id}`,
+//         { method: "DELETE" }
+//       );
+
+//       if (res.ok) {
+//         alert(`User ID ${id} deleted (fake API, only UI updated)`);
+//         // Remove from UI
+//         setUsers((prev) => prev.filter((user) => user.id !== id));
+//       } else {
+//         console.error("Delete failed");
+//       }
+//     } catch (err) {
+//       console.error("Error:", err);
+//     }
+//   };
+
+//   if (loading) {
+//     return <div className="p-6 text-center">Loading...</div>;
+//   }
+
+//   return (
+//     <div className="p-4">
+//       <h2 className="text-xl font-bold mb-4 text-center">My Task</h2>
+//       <Table className="border border-gray-300 text-center border-collapse min-w-[700px] mx-auto">
+//         <TableHeader>
+//           <TableRow className="border border-gray-300">
+//             <TableHead className="border border-gray-300">ID</TableHead>
+//             <TableHead className="border border-gray-300">Name</TableHead>
+//             <TableHead className="border border-gray-300">Email</TableHead>
+//             <TableHead className="border border-gray-300">Phone</TableHead>
+//             <TableHead className="border border-gray-300">City</TableHead>
+//             <TableHead className="border border-gray-300">Action</TableHead>
+//           </TableRow>
+//         </TableHeader>
+//         <TableBody>
+//           {users.map((user) => (
+//             <TableRow key={user.id} className="border-b border-gray-300">
+//               <TableCell className="border border-gray-300">{user.id}</TableCell>
+//               <TableCell className="border border-gray-300">{user.name}</TableCell>
+//               <TableCell className="border border-gray-300">{user.email}</TableCell>
+//               <TableCell className="border border-gray-300">{user.phone}</TableCell>
+//               <TableCell className="border border-gray-300">{user.address?.city}</TableCell>
+//               <TableCell className="border border-gray-300">
+//                <button
+//   onClick={() => handleDelete(user.id)}
+//   style={{
+//     backgroundColor: "#EF4444",
+//     color: "white",
+//     padding: "5px 10px",
+//     borderRadius: "5px",
+//     border: "none",
+//     cursor: "pointer"
+//   }}
+//   onMouseEnter={(e) => (e.target.style.backgroundColor = "#DC2626")}
+//   onMouseLeave={(e) => (e.target.style.backgroundColor = "#EF4444")}
+// >
+//   Delete
+// </button>
+
+//               </TableCell>
+//             </TableRow>
+//           ))}
+//         </TableBody>
+//       </Table>
+//     </div>
+//   );
+// }
+
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableBody,
   TableRow,
-} from "../component/table"; 
-import "bootstrap/dist/css/bootstrap.min.css";
+  TableHead,
+  TableCell,
+} from "../component/table";
 
-export default function Task() {
-  const [users, setUsers] = useState([]);
+export default function AlbumPhotos() {
+  const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [editingId, setEditingId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+  const limit = 10;
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => setUsers(json))
-      .catch((err) => console.error("Fetch error:", err))
-      .finally(() => setLoading(false));
+    const fetchPhotos = async () => {
+      try {
+        const res = await fetch("https://jsonplaceholder.typicode.com/albums/1/photos");
+        const data = await res.json();
+        setPhotos(data);
+      } catch (err) {
+        console.error("Fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPhotos();
   }, []);
 
-  // ✅ Delete handler
-  const handleDelete = async (id) => {
-    try {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${id}`,
-        { method: "DELETE" }
-      );
+  const totalPages = Math.ceil(photos.length / limit);
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const currentItems = photos.slice((page - 1) * limit, page * limit);
 
-      if (res.ok) {
-        alert(`User ID ${id} deleted (fake API, only UI updated)`);
-        // Remove from UI
-        setUsers((prev) => prev.filter((user) => user.id !== id));
-      } else {
-        console.error("Delete failed");
-      }
+  // PUT method to update photo title
+  const handleUpdate = async (id) => {
+    try {
+      const updatedPhoto = { ...photos.find((p) => p.id === id), title: editTitle };
+
+      const res = await fetch(`https://jsonplaceholder.typicode.com/photos/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedPhoto),
+      });
+
+      const result = await res.json();
+      console.log("Updated photo:", result);
+
+      // Update state
+      setPhotos((prev) => prev.map((p) => (p.id === id ? result : p)));
+      setEditingId(null);
+      setEditTitle("");
     } catch (err) {
-      console.error("Error:", err);
+      console.error("PUT error:", err);
     }
   };
 
   if (loading) {
-    return <div className="p-6 text-center">Loading...</div>;
+    return <p className="p-4 text-center">Loading photos...</p>;
   }
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4 text-center">My Task</h2>
+      <h2 className="text-xl font-bold mb-4 text-center">Album Photos</h2>
+
       <Table className="border border-gray-300 text-center border-collapse min-w-[700px] mx-auto">
         <TableHeader>
-          <TableRow className="border border-gray-300">
+          <TableRow>
             <TableHead className="border border-gray-300">ID</TableHead>
-            <TableHead className="border border-gray-300">Name</TableHead>
-            <TableHead className="border border-gray-300">Email</TableHead>
-            <TableHead className="border border-gray-300">Phone</TableHead>
-            <TableHead className="border border-gray-300">City</TableHead>
+            <TableHead className="border border-gray-300">Title</TableHead>
             <TableHead className="border border-gray-300">Action</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
-          {users.map((user) => (
-            <TableRow key={user.id} className="border-b border-gray-300">
-              <TableCell className="border border-gray-300">{user.id}</TableCell>
-              <TableCell className="border border-gray-300">{user.name}</TableCell>
-              <TableCell className="border border-gray-300">{user.email}</TableCell>
-              <TableCell className="border border-gray-300">{user.phone}</TableCell>
-              <TableCell className="border border-gray-300">{user.address?.city}</TableCell>
+          {currentItems.map((photo) => (
+            <TableRow key={photo.id}>
+              <TableCell className="border border-gray-300">{photo.id}</TableCell>
               <TableCell className="border border-gray-300">
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
+                {editingId === photo.id ? (
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    className="border px-2 py-1 rounded w-full"
+                  />
+                ) : (
+                  photo.title
+                )}
               </TableCell>
+              <TableCell className="border border-gray-300">
+  {editingId === photo.id ? (
+    <button
+      onClick={() => handleUpdate(photo.id)}
+      className="btn btn-success btn-sm"
+    >
+      Save
+    </button>
+  ) : (
+    <button
+      onClick={() => {
+        setEditingId(photo.id);
+        setEditTitle(photo.title);
+      }}
+      className="btn btn-primary btn-sm"
+    >
+      Edit
+    </button>
+  )}
+</TableCell>
+
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      {/* Pagination */}
+      <div className="flex justify-center items-center mt-4 gap-2 text-center">
+        <button
+          className={`px-3 py-1 border rounded ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={page === 1}
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+        >
+          Previous
+        </button>
+
+        {pages.map((p) => (
+          <button
+            key={p}
+            className={`px-3 py-1 border rounded ${p === page ? "bg-gray-300" : ""}`}
+            onClick={() => setPage(p)}
+          >
+            {p}
+          </button>
+        ))}
+
+        <button
+          className={`px-3 py-1 border rounded ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={page === totalPages}
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

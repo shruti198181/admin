@@ -71,11 +71,21 @@ export default function UsersTable() {
               <TableCell className="border border-gray-300">{user.address?.city}</TableCell>
               <TableCell className="border border-gray-300">
                 <button
-                  onClick={() => handleDelete(user.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
+  onClick={() => handleDelete(user.id)}
+  style={{
+    backgroundColor: "#EF4444",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    border: "none",
+    cursor: "pointer"
+  }}
+  onMouseEnter={(e) => (e.target.style.backgroundColor = "#DC2626")}
+  onMouseLeave={(e) => (e.target.style.backgroundColor = "#EF4444")}
+>
+  Delete
+</button>
+
               </TableCell>
             </TableRow>
           ))}
