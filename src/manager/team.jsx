@@ -16,10 +16,7 @@ export default function AlbumPhotos() {
   const [page, setPage] = useState(1);
   const limit = 10; 
   const totalPages = Math.ceil(photos.length / limit);
-  const startIndex = (page - 1) * limit;
-  const currentItems = photos.slice(startIndex, startIndex + limit);
-
-
+  const currentItems = photos.slice( (page - 1) * limit, page * limit);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
 
@@ -69,9 +66,7 @@ export default function AlbumPhotos() {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
-
-      
+      </Table>  
       <div className="flex justify-center items-center mt-4 gap-2 text-center">
         <button
           className={`px-3 py-1 border rounded ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -95,7 +90,7 @@ export default function AlbumPhotos() {
           className={`px-3 py-1 border rounded ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === totalPages}
           onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-        >
+       >
           Next
         </button>
       </div>

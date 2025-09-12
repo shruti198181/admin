@@ -45,11 +45,13 @@ export default function LoginForm({ setRole }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validEmail() && validPassword()) {
+      const email = formData.email.trim().toLowerCase(); // remove spaces, lowercase
+
       // Determine role
       let role = null;
-      if (formData.email === "admin@gmail.com") role = "admin";
-      else if (formData.email === "manager@gmail.com") role = "manager";
-      else if (formData.email === "user@gmail.com") role = "user";
+      if (email === "admin@gmail.com") role = "admin";
+      else if (email === "manager@gmail.com") role = "manager";
+      else if (email === "user@gmail.com") role = "user";
 
       if (role) {
         setRole(role); // update role in App.jsx

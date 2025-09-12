@@ -1,6 +1,11 @@
+
+"use client"; 
+
 import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import NavbarHeader from "./component/header";
 import LoginForm from "./page/loginform";
 import Dashboard from "./page/dashboard";
@@ -10,11 +15,19 @@ import Reports from "./admins/reports";
 import Projects from "./manager/project";
 import Team from "./manager/team";
 import ManagerReport from "./manager/mreport";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import MyProfile from "./user/myprofile";
+import Task from "./user/task";
+
+
+const ROLE_ADMIN = "admin";
+const ROLE_MANAGER = "manager";
+const ROLE_USER = "user";
 
 export default function App() {
-  const [role, setRole] = useState(null);
-  const [showLogin, setShowLogin] = useState(true); // show login on first load
+  const [role, setRole] = useState(null); 
+  const [showLogin, setShowLogin] = useState(true); 
+  
+
 
   const handleLogout = () => {
     setRole(null);
@@ -23,16 +36,16 @@ export default function App() {
 
   return (
     <>
-      {/* Header always visible */}
-      <NavbarHeader role={role} setRole={setRole} setShowLogin={setShowLogin} />
+     
+      <NavbarHeader role={role} setRole={setRole} setShowLogin={setShowLogin} onLogout={handleLogout} />
 
-      {/* Login Modal */}
+      
       <Modal
         show={showLogin && !role}
-        onHide={() => setShowLogin(false)}
+        onHide={() => {}}
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -43,79 +56,63 @@ export default function App() {
             }}
           />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowLogin(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
 
-      {/* Routes */}
       <Routes>
-        {/* Default route */}
+       
         <Route
           path="/"
-          element={
-            role ? (
-              <Navigate to="/dashboard" />
-            ) : (
-              <div className="text-center mt-5">
-                <h2>Welcome! Please login to continue.</h2>
-              </div>
-            )
-          }
+          element={role ? <Navigate to="/dashboard" /> : (
+            <div className="text-center mt-5">
+              <h2>Welcome! Please login to continue.</h2>
+            </div>
+          )}
         />
 
-        {/* Dashboard */}
+        
         <Route
           path="/dashboard/*"
-          element={
-            role ? (
-              <Dashboard role={role} onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
-          }
+          element={role ? <Dashboard role={role} onLogout={handleLogout} /> : <Navigate to="/" />}
         />
 
-        {/* Admin routes */}
+       
         <Route
           path="/admin/users"
-          element={role === "admin" ? <UsersData /> : <Navigate to="/" />}
+          element={role === ROLE_ADMIN ? <UsersData /> : <Navigate to="/" />}
         />
         <Route
           path="/admin/setting"
-          element={role === "admin" ? <Setting /> : <Navigate to="/" />}
+          element={role === ROLE_ADMIN ? <Setting /> : <Navigate to="/" />}
         />
         <Route
           path="/admin/reports"
-          element={role === "admin" ? <Reports /> : <Navigate to="/" />}
+          element={role === ROLE_ADMIN ? <Reports /> : <Navigate to="/" />}
         />
 
-        {/* Manager routes */}
+        
         <Route
           path="/manager/project"
-          element={role === "manager" ? <Projects /> : <Navigate to="/" />}
+          element={role === ROLE_MANAGER ? <Projects /> : <Navigate to="/" />}
         />
         <Route
           path="/manager/team"
-          element={role === "manager" ? <Team /> : <Navigate to="/" />}
+          element={role === ROLE_MANAGER ? <Team /> : <Navigate to="/" />}
         />
         <Route
           path="/manager/reports"
-          element={role === "manager" ? <ManagerReport /> : <Navigate to="/" />}
+          element={role === ROLE_MANAGER ? <ManagerReport /> : <Navigate to="/" />}
         />
-        {/* <Route 
-        path="/user/myprofile"
-        element={role==="user" ? <MyProfile/> : <Navigate to="/"/>}/>
 
-<Route 
-        path="/user/task"
-        element={role==="user" ? <Task/> : <Navigate to="/"/>}/> */}
-
-        {/* Catch-all */}
-        <Route path="*" element={<Navigate to="/" />} />
         
+       <Route 
+  path="/user/myprofile"
+  element={role==="user" ? <MyProfile/> : <Navigate to="/"/>}/>
+
+                <Route 
+               path="/user/task" element={role === "user" ? <Task /> : <Navigate to="/" />} />
+
+        
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

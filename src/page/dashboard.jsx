@@ -6,6 +6,8 @@ import Reports from "../admins/reports";
 import Projects from "../manager/project";
 import Team from "../manager/team";
 import ManagerReport from "../manager/mreport";
+import MyProfile from "../user/myprofile";
+import Task from "../user/task";
 
 const RoleMenu = {
   admin: ["Users", "Setting", "Reports"],
@@ -125,8 +127,8 @@ export default function Dashboard({ role, onLogout }) {
         {selectedMenu === "Projects" && <Projects />}
         {selectedMenu === "Team" && <Team />}
         {selectedMenu === "Reports" && currentRole === "manager" && <ManagerReport />}
-        {selectedMenu === "My Profile" && <p>🙋 My Profile Info</p>}
-        {selectedMenu === "Task" && <p>✅ Task Table</p>}
+        {selectedMenu === "My Profile" && currentRole === "user" && <MyProfile/>}
+        {selectedMenu === "Task" && currentRole  === "user" && <Task/>}
       </div>
     </div>
   );
