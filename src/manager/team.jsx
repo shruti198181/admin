@@ -1,49 +1,104 @@
-import { TableHead,Table,TableHeader, TableRow ,TableCell,TableBody} from "../component/table"
+"use client"
 
-export default function Team() {
-    const managers = [
-        {id : 1,
-            name :'Rahul Patel',
-            department :'Sale',
-            role:'manager',
-        },
-        {
-            id:2,
-            name :'Smit Shaha',
-            department :'Marketing',
-            role:'manager',
-        },
-        {
-            id:3,
-            name :'John Dave',
-            department :'Operations',
-            role :'manager',
-        },
-    ]
-    return(
-        <div style={{display :'flex', flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-         <div className="fs-3 color-blue">Manager Team</div>
-          <Table className="mt-5">
-                <TableHeader>
-                     <TableRow>
-                    <TableHead className="border border-gray-300">Id</TableHead>
-                    <TableHead className="border border-gray-300">Name</TableHead>
-                    <TableHead className="border border-gray-300">DepartMent</TableHead>
-                    <TableHead className="border border-gray-300">Role</TableHead>
-                    </TableRow>
-                </TableHeader>
-              <TableBody>
-              {managers.map((manager) => (
-                 <TableRow key={manager.id}>
-                    <TableCell className="border border-gray-300">{manager.id}</TableCell>
-                    <TableCell className="border border-gray-300">{manager.name}</TableCell>
-                    <TableCell className="border border-gray-300">{manager.department}</TableCell>
-                    <TableCell className="border border-gray-300">{manager.role}</TableCell>
-                 </TableRow>
-              ))}
-                
-                </TableBody>  
-          </Table>
-        </div>
-    )
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "../component/table"; // adjust path if needed
+
+export default function AlbumPhotos() {
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const limit = 10; 
+  const totalPages = Math.ceil(photos.length / limit);
+  const startIndex = (page - 1) * limit;
+  const currentItems = photos.slice(startIndex, startIndex + limit);
+
+
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/albums/1/photos")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("API Data:", data);
+        setPhotos(data);
+      })
+      .catch((err) => console.error("Fetch error:", err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return <p className="p-4 text-center">Loading photos...</p>;
+  }
+
+
+  
+  return (
+    <div className="p-4">
+      <h2 className="text-xl font-bold mb-4 text-center">Album Photos</h2>
+
+      <Table className="border border-gray-300 text-center border-collapse min-w-[700px]">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="border border-gray-300">ID</TableHead>
+            <TableHead className="border border-gray-300">Title</TableHead>
+            {/* <TableHead className="border border-gray-300">Image</TableHead> */}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {currentItems.map((photo) => (
+            <TableRow key={photo.id}>
+              <TableCell className="border border-gray-300">{photo.id}</TableCell>
+              <TableCell className="border border-gray-300">{photo.title}</TableCell>
+              {/* <TableCell className="border border-gray-300">
+                <img
+                  src={photo.thumbnailUrl}
+                  alt={photo.title}
+                  width={100}
+                  height={100}
+                  className="rounded border"
+                />
+              </TableCell> */}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      {/* ✅ Pagination Controls */}
+      <div className="flex justify-center items-center mt-4 gap-2 text-center">
+        <button
+          className={`px-3 py-1 border rounded ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={page === 1}
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+        >
+          Previous
+        </button>
+
+        {pages.map((p) => (
+          <button
+            key={p}
+            className={`px-3 py-1 border rounded ${p === page ? "bg-gray-300" : ""}`}
+            onClick={() => setPage(p)}
+          >
+            {p}
+          </button>
+        ))}
+
+        <button
+          className={`px-3 py-1 border rounded ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={page === totalPages}
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
 }
