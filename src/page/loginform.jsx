@@ -1,53 +1,60 @@
-"use client"
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function LoginForm({ setRole }) {
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+export default function LoginForm({ onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { email, password } = formData;
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
+    }
 
-    if (email === "admin@gmail.com" && password === "admin123") {
-      setRole("admin");
-      navigate("/admins"); 
-        } else if (email === "manager@gmail.com" && password === "manager123") {
-      setRole("manager");
-      navigate("/manager"); 
-        } else if (email === "user@gmail.com" && password === "user123") {
-      setRole("user");
-      navigate("/user"); 
-    } 
+    const trimmedEmail = email.trim().toLowerCase();
+    let role = null;
+
+    if (trimmedEmail === "admin@gmail.com") role = "admin";
+    else if (trimmedEmail === "manager@gmail.com") role = "manager";
+    else if (trimmedEmail === "user@gmail.com") role = "user";
+
+    if (role) {
+      onLogin(role); // Pass role to parent
+    } else {
+      alert("Invalid email. Use admin@gmail.com, manager@gmail.com, or user@gmail.com");
+    }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", width: "300px" }}>
-        <h2>Login</h2>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          style={{ marginBottom: "10px", padding: "8px" }}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          style={{ marginBottom: "10px", padding: "8px" }}
-        />
-        <button type="submit" style={{ padding: "10px", background: "#007bff", color: "#fff", border: "none" }}>
+    <div style={{ width: "300px", margin: "0 auto" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="text"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email"
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-primary w-100">
           Login
         </button>
       </form>
