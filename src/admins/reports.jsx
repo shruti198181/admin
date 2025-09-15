@@ -28,30 +28,31 @@ export default function Report() {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const currentTodos = data.slice((page - 1) * limit, page * limit);
 
-  if (loading) return <p style={{ padding: "20px" }}>Loading todos...</p>;
+  if (loading) return <p className="p-4">Loading todos...</p>;
 
-    return (
-    <div className="p-4 flex flex-col items-center">
+  return (
+    <div className="p-4 flex flex-col items-center w-full">
       <h2 className="text-2xl font-bold mb-4 text-center">User Todos Report</h2>
 
+      {/* Table wrapper with responsive scrolling */}
       <div className="overflow-x-auto w-full">
-        <Table className="border border-gray-300 border-collapse min-w-[700px] mx-auto">
+        <Table className="min-w-full border border-gray-300 border-collapse">
           <TableHeader>
             <TableRow className="bg-gray-100">
-              <TableHead className="border border-gray-300 p-2 text-center">ID</TableHead>
-              <TableHead className="border border-gray-300 p-2 text-center">User ID</TableHead>
-              <TableHead className="border border-gray-300 p-2 text-left">Title</TableHead>
-              <TableHead className="border border-gray-300 p-2 text-center">Completed</TableHead>
+              <TableHead className="border p-2 text-center whitespace-nowrap">ID</TableHead>
+              <TableHead className="border p-2 text-center whitespace-nowrap">User ID</TableHead>
+              <TableHead className="border p-2 text-left">Title</TableHead>
+              <TableHead className="border p-2 text-center whitespace-nowrap">Completed</TableHead>
             </TableRow>
           </TableHeader>
 
           <TableBody>
             {currentTodos.map((todo) => (
               <TableRow key={todo.id} className="hover:bg-gray-50">
-                <TableCell className="border border-gray-300 p-2 text-center">{todo.id}</TableCell>
-                <TableCell className="border border-gray-300 p-2 text-center">{todo.userId}</TableCell>
-                <TableCell className="border border-gray-300 p-2">{todo.title}</TableCell>
-                <TableCell className="border border-gray-300 p-2 text-center">
+                <TableCell className="border p-2 text-center">{todo.id}</TableCell>
+                <TableCell className="border p-2 text-center">{todo.userId}</TableCell>
+                <TableCell className="border p-2">{todo.title}</TableCell>
+                <TableCell className="border p-2 text-center">
                   <button
                     onClick={() => {
                       const updatedData = data.map((t) =>
@@ -59,16 +60,8 @@ export default function Report() {
                       );
                       setData(updatedData);
                     }}
-                    style={{
-                      padding: "5px 15px",
-                      borderRadius: "9999px",
-                      fontWeight: "600",
-                      color: "#fff",
-                      border: "none",
-                      cursor: "pointer",
-                      backgroundColor: todo.completed ? "#28a745" : "#dc3545",
-                      transition: "background-color 0.2s",
-                    }}
+                    className={`px-4 py-1 rounded-full font-semibold text-white transition-colors
+                      ${todo.completed ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
                   >
                     {todo.completed ? "Completed" : "Not Completed"}
                   </button>
@@ -80,7 +73,7 @@ export default function Report() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center mt-4 gap-2   text-center">
+      <div className="flex flex-wrap justify-center items-center mt-4 gap-2">
         <button
           className={`btn btn-sm btn-primary ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === 1}
