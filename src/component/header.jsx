@@ -96,136 +96,86 @@
 
 //   );
 // }
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Navbar, Nav, NavDropdown, Container, Button, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import LoginForm from "../page/loginform";
 
-export default function NavbarHeader({ role, setRole, setShowLogin }) {
-  const handleLogout = () => {
-    setRole(null);
-    setShowLogin(true);
-  };
+export default function NavbarHeader() {
+  const [showLogin, setShowLogin] = useState(false);
+  const [role, setRole] = useState(null);
+  const navigate = useNavigate();
 
-  const menuItems = {
-    admin: [
-      { label: "Users", path: "/admin/user" },
-      { label: "Settings", path: "/admin/setting" },
-      { label: "Reports", path: "/admin/reports" },
-    ],
-    manager: [
-      { label: "Projects", path: "/manager/project" },
-      { label: "Team", path: "/manager/team" },
-      { label: "Reports", path: "/manager/reports" },
-    ],
-    user: [
-      { label: "My Profile", path: "/user/myprofile" },
-      { label: "Task", path: "/user/task" },
-    ],
+  const handleLoginOpen = () => setShowLogin(true);
+  const handleLoginClose = () => setShowLogin(false);
+
+  const handleLoginSuccess = (selectedRole) => {
+    setRole(selectedRole);
+    setShowLogin(false);
+
+    if (selectedRole === "admin") navigate("/admin");
+    if (selectedRole === "manager") navigate("/manager");
+    if (selectedRole === "user") navigate("/user");
   };
 
   return (
-    
-    <nav className="navbar navbar-expand-lg navbar-dark bg-light">
-      <div className="container">
+    <>
+      <Navbar bg="dark" variant="dark" expand="lg">
+        <Container>
+          <Navbar.Brand as={Link} to="/">
+            My Dashboard
+          </Navbar.Brand>
 
-        <Link className="navbar-brand" to="/">
-  <img
- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSntpCWJJ3vBRfCGc1-CoX7-VtGDlVX5xQqSA&s"
-alt="My Dashboard Logo"
-    height="70"               // adjust height as needed
-    className="d-inline-block align-text-top "
-    
-  />
-</Link>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mx-auto">
+              <NavDropdown title="Admin" id="admin-dropdown">
+                <NavDropdown.Item as={Link} to="/admin/users">Users</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/admin/setting">Settings</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/admin/reports">Reports</NavDropdown.Item>
+              </NavDropdown>
 
-        <div className="collapse navbar-collapse justify-content-center">
-          <ul className="navbar-nav">
+              <NavDropdown title="Manager" id="manager-dropdown">
+                <NavDropdown.Item as={Link} to="/manager/project">Projects</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/manager/team">Team</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/manager/reports">Reports</NavDropdown.Item>
+              </NavDropdown>
 
-            {/* Admin dropdown */}
-            <li className="nav-item dropdown mx-2">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                id="adminDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Admin
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="adminDropdown">
-                {menuItems.admin.map((item) => (
-                  <li key={item.path}>
-                    <Link className="dropdown-item" to={item.path}>
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
+              <NavDropdown title="User" id="user-dropdown">
+                <NavDropdown.Item as={Link} to="/user/myprofile">My Profile</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/user/task">Tasks</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
 
-            {/* Manager dropdown */}
-            <li className="nav-item dropdown mx-2">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                id="managerDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Manager
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="managerDropdown">
-                {menuItems.manager.map((item) => (
-                  <li key={item.path}>
-                    <Link className="dropdown-item" to={item.path}>
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
+            <Nav>
+              {!role ? (
+                <Button variant="outline-light" onClick={handleLoginOpen}>
+                  Login
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-danger"
+                  onClick={() => {
+                    setRole(null);
+                    navigate("/");
+                  }}
+                >
+                  Logout
+                </Button>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-            {/* User dropdown */}
-            <li className="nav-item dropdown mx-2">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                id="userDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                User
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="userDropdown">
-                {menuItems.user.map((item) => (
-                  <li key={item.path}>
-                    <Link className="dropdown-item" to={item.path}>
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-
-          </ul>
-        </div>
-
-        {/* Login / Logout on right */}
-        <ul className="navbar-nav ms-auto">
-          {!role && (
-            <li className="nav-item">
-              <button className="btn btn-primary" onClick={() => setShowLogin(true)}>
-                Login
-              </button>
-            </li>
-          )}
-
-          {role && (
-            <li className="nav-item">
-              <button className="btn btn-danger" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-          )}
-        </ul>
-      </div>
-    </nav>
-
+      <Modal show={showLogin} onHide={handleLoginClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <LoginForm onLogin={handleLoginSuccess} />
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
