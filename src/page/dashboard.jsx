@@ -97,11 +97,10 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu }) {
 export default function Dashboard({ role, onLogout }) {
   const [currentRole] = useState(role);
 
-  // ✅ menus must be defined before using it
+  
   const menus = useMemo(() => RoleMenu[currentRole] ?? [], [currentRole]);
 
-  // ✅ set first menu as default
-  const [selectedMenu, setSelectedMenu] = useState(menus[0] || "");
+``  const [selectedMenu, setSelectedMenu] = useState(menus[0] || "");
 
   return (
     <div style={{ display: "flex", width: "100vw", height: "100vh" }}>
