@@ -66,3 +66,15 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNFpZUusVnBdUffCn-Z5tFD9Htx_fYwkA2Eg&s");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
