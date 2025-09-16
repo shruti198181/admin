@@ -215,7 +215,7 @@ export default function Dashboard({ role, onLogout }) {
 
         @media (min-width: 768px) {
           .dashboard-content {
-            margin-left: 220px;
+            padding-left: 220px;
           }
         }
 

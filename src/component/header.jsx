@@ -21,7 +21,7 @@ export default function NavbarHeader() {
   };
 
   return (
-    <>
+    <> 
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/">
