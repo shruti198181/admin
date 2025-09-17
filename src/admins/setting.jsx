@@ -1,6 +1,5 @@
 "use client";
 
-
 import React, { useEffect, useState } from "react";
 import {
   Table,
@@ -9,7 +8,7 @@ import {
   TableRow,
   TableHead,
   TableCell,
-} from "../component/table"; // adjust path if needed
+} from "../component/table"; 
 
 export default function PostsPage() {
   const [posts, setPosts] = useState([]);

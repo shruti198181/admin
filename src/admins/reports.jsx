@@ -52,20 +52,22 @@ export default function Report() {
                 <TableCell className="border p-2 text-center">{todo.id}</TableCell>
                 <TableCell className="border p-2 text-center">{todo.userId}</TableCell>
                 <TableCell className="border p-2">{todo.title}</TableCell>
-                <TableCell className="border p-2 text-center">
-                  <button
-                    onClick={() => {
-                      const updatedData = data.map((t) =>
-                        t.id === todo.id ? { ...t, completed: !t.completed } : t
-                      );
-                      setData(updatedData);
-                    }}
-                    className={`px-4 py-1 rounded-full font-semibold text-primary transition-colors
-                      ${todo.completed ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
-                  >
-                    {todo.completed ? "Completed" : "Not Completed"}
-                  </button>
-                </TableCell>
+               <TableCell className="border p-2 text-center">
+  <button
+    onClick={() => {
+      const updatedData = data.map((t) =>
+        t.id === todo.id ? { ...t, completed: !t.completed } : t
+      );
+      setData(updatedData);
+    }}
+    className={`w-40 py-1 rounded-full font-semibold text-primary text-center transition-colors
+      ${todo.completed ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
+  >
+    {todo.completed ? "Completed" : "Not Completed"}
+  </button>
+</TableCell>
+
+
               </TableRow>
             ))}
           </TableBody>
@@ -73,7 +75,7 @@ export default function Report() {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-wrap justify-center items-center mt-4 gap-2 text-center">
+      <div className="flex flex-wrap justify-center items-center mt-2  gap-2 text-center">
         <button
           className={`btn btn-sm btn-primary ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === 1}
