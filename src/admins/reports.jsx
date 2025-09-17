@@ -36,7 +36,7 @@ export default function Report() {
 
       {/* Table wrapper with responsive scrolling */}
       <div className="overflow-x-auto w-full">
-        <Table className="min-w-full border border-gray-300 border-collapse">
+        <Table className="border border-gray-300 border-collapse min-w-[700px] mx-auto scrollbar-none">
           <TableHeader>
             <TableRow className="bg-gray-100">
               <TableHead className="border p-2 text-center whitespace-nowrap">ID</TableHead>
@@ -73,7 +73,7 @@ export default function Report() {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-wrap justify-center items-center mt-4 gap-2">
+      <div className="flex flex-wrap justify-center items-center mt-4 gap-2 text-center">
         <button
           className={`btn btn-sm btn-primary ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === 1}
