@@ -28,8 +28,8 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
   return (
     <>
       <div className={`sidebar ${mobileOpen ? "open" : ""}`}>
-        <div>
-          <h2 className="sidebar-title">Dashboard</h2>
+        {/* Role + Menus */}
+        <div className="menu-container">
           <h3 className="role-toggle" onClick={() => setOpen(!open)}>
             {currentRole} ▾
           </h3>
@@ -46,9 +46,12 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
             ))}
         </div>
 
-        <button onClick={onLogout} className="logout-btn">
-          <BsBoxArrowUpRight /> Logout
-        </button>
+        {/* Logout button */}
+        <div className="logout-container">
+          <button onClick={onLogout} className="logout-btn">
+            <BsBoxArrowUpRight /> Logout
+          </button>
+        </div>
       </div>
 
       {mobileOpen && <div className="sidebar-overlay" onClick={closeMobile}></div>}
@@ -62,7 +65,6 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding: 10px;
           position: fixed;
           top: 0;
           left: 0;
@@ -75,14 +77,13 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
           transform: translateX(0);
         }
 
-        .sidebar-title {
-          font-size: 20px;
-          font-weight: bold;
-          margin-bottom: 20px;
+        .menu-container {
+          flex: 1;
+          padding: 20px 10px;
         }
 
         .role-toggle {
-          font-size: 18px;
+          font-size: 16px;
           font-weight: bold;
           margin-bottom: 15px;
           cursor: pointer;
@@ -104,8 +105,16 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
           background-color: #374151;
         }
 
+        .logout-container {
+          padding: 15px;
+          border-top: 1px solid #374151;
+          display: flex;
+          justify-content: center;
+          padding-bottom : 100px;
+        }
+
         .logout-btn {
-          width: 150px;
+          width: 100%;
           background-color: #ef4444;
           border: none;
           border-radius: 5px;
@@ -115,7 +124,8 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
           align-items: center;
           justify-content: center;
           gap: 5px;
-          padding: 8px;
+          padding: 10px;
+          font-size: 14px;
         }
 
         .sidebar-overlay {
@@ -175,7 +185,9 @@ export default function Dashboard({ role, onLogout }) {
       {/* Main content */}
       <div className="dashboard-content">
         <h2>{currentRole} Dashboard</h2>
-        <div className="dashboard-inner">{roleComponents[currentRole]?.[selectedMenu] || <p>Select a menu</p>}</div>
+        <div className="dashboard-inner">
+          {roleComponents[currentRole]?.[selectedMenu] || <p>Select a menu</p>}
+        </div>
       </div>
 
       <style jsx>{`

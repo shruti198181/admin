@@ -16,25 +16,29 @@ import MyProfile from "./user/myprofile";
 import Task from "./user/task";
 
 export default function App() {
+  const handleLogout = () => {
+    window.location.href = "/"; // 👈 goes back to home (only header visible)
+  };
+
   return (
     <>
       <NavbarHeader />
 
       <Routes>
         {/* Admin Routes */}
-        <Route path="/admin" element={<Dashboard role="admin" />} />
+        <Route path="/admin" element={<Dashboard role="admin" onLogout={handleLogout} />} />
         <Route path="/admin/users" element={<UsersData />} />
         <Route path="/admin/setting" element={<Setting />} />
         <Route path="/admin/reports" element={<Reports />} />
 
         {/* Manager Routes */}
-        <Route path="/manager" element={<Dashboard role="manager" />} />
+        <Route path="/manager" element={<Dashboard role="manager" onLogout={handleLogout} />} />
         <Route path="/manager/project" element={<Projects />} />
         <Route path="/manager/team" element={<Team />} />
         <Route path="/manager/reports" element={<ManagerReport />} />
 
         {/* User Routes */}
-        <Route path="/user" element={<Dashboard role="user" />} />
+        <Route path="/user" element={<Dashboard role="user" onLogout={handleLogout} />} />
         <Route path="/user/myprofile" element={<MyProfile />} />
         <Route path="/user/task" element={<Task />} />
 

@@ -56,7 +56,7 @@ export default function UsersData() {
         <>
           <Table className="border border-gray-300 border-collapse min-w-[700px] mx-auto scrollbar-none">
   <TableHeader>
-    <TableRow className="border-b border-gray-300 text-primary text-center">
+    <TableRow className="border-b border-gray-300  text-center  c">
       <TableHead className="border border-gray-300">ID</TableHead>
       <TableHead className="border border-gray-300">Title</TableHead>
       <TableHead className="border border-gray-300">Body</TableHead>

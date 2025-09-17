@@ -27,14 +27,14 @@ export default function PostsPage() {
 
   return (
     <div style={{ padding: "20px", overflowX: "auto" }}>
-      <h1 style={{ marginBottom: "20px", fontSize: "24px", fontWeight: "bold" }}>User Posts</h1>
-      <Table style={{ minWidth: "700px", border: "1px solid #ddd", borderRadius: "8px" }}>
-        <TableHeader style={{ backgroundColor: "#f0f0f0" }}>
-          <TableRow>
-            <TableHead style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>ID</TableHead>
-            <TableHead style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>User ID</TableHead>
-            <TableHead style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>Title</TableHead>
-            <TableHead style={{ padding: "10px", borderBottom: "1px solid #ccc" }}>Body</TableHead>
+      <h1 style={{ marginBottom: "20px", fontSize: "24px", fontWeight: "bold", textAlign:"center"}}>User Posts</h1>
+      <Table className="border border-red-300 border-collapse min-w-[700px] mx-auto scrollbar-none">
+        <TableHeader style={{ backgroundColor: "#f0f0f0" ,color:"#d20217ff" }}>
+          <TableRow className="border-b border-gray-300  text-center" >
+            <TableHead className="border border-gray-300" >ID</TableHead>
+            <TableHead className="border border-gray-300">User ID</TableHead>
+            <TableHead className="border border-gray-300">Title</TableHead>
+            <TableHead className="border border-gray-300">Body</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -48,10 +48,10 @@ export default function PostsPage() {
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f9f9f9")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
             >
-              <TableCell style={{ padding: "10px" }}>{post.id}</TableCell>
-              <TableCell style={{ padding: "10px" }}>{post.userId}</TableCell>
-              <TableCell style={{ padding: "10px" }}>{post.title}</TableCell>
-              <TableCell style={{ padding: "10px" }}>{post.body}</TableCell>
+              <TableCell className="border border-gray-300">{post.id}</TableCell>
+              <TableCell className="border border-gray-300">{post.userId}</TableCell>
+              <TableCell className="border border-gray-300">{post.title}</TableCell>
+              <TableCell className="border border-gray-300">{post.body}</TableCell>
             </TableRow>
           ))}
         </TableBody>
