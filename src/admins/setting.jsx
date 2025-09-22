@@ -112,7 +112,6 @@ export default function PostsPage() {
 
                   {showCommentBox[post.id] && (
                     <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                      {/* Auto-growing textarea */}
                       <div style={{ display: "flex", gap: "6px" }}>
                         <textarea
                           placeholder="Add a comment..."
@@ -150,14 +149,14 @@ export default function PostsPage() {
                         </button>
                       </div>
 
-                      {/* Comments list with hidden scrollbar */}
+                     
                       <div
                         style={{
                           display: "flex",
                           flexDirection: "column",
                           gap: "2px",
-                          maxHeight: "none", // let it grow automatically
-                          overflow: "hidden", // hide scrollbar
+                          maxHeight: "none",
+                          overflow: "hidden", 
                         }}
                       >
                         {comments[post.id]?.length ? (
