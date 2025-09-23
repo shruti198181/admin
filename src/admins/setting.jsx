@@ -13,7 +13,6 @@ export default function PostsPage() {
   const [animateLike, setAnimateLike] = useState({});
   const [scrollY, setScrollY] = useState(0); // For parallax
 
-  // Fetch posts
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts?userId=1")
       .then((res) => res.json())
@@ -22,7 +21,6 @@ export default function PostsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Scroll listener for parallax
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
@@ -212,7 +210,6 @@ export default function PostsPage() {
               </span>
             </div>
 
-            {/* Comment box */}
             {showCommentBox[post.id] && (
               <div
                 style={{
@@ -260,7 +257,6 @@ export default function PostsPage() {
               </div>
             )}
 
-            {/* Display comments */}
             {comments[post.id]?.length > 0 && (
               <div
                 style={{

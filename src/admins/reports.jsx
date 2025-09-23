@@ -153,7 +153,7 @@ export default function Report() {
     <div className="p-4 flex flex-col items-center w-full">
       <h2 className="text-2xl font-bold mb-4 text-center">User Todos Report</h2>
 
-      {/* Table wrapper with responsive scrolling */}
+     
       <div className="overflow-x-auto w-full">
         <Table className="border border-gray-300 border-collapse min-w-[800px] mx-auto scrollbar-none">
           <TableHeader>
@@ -187,7 +187,6 @@ export default function Report() {
                   </button>
                 </TableCell>
 
-                {/* Action column */}
                 <TableCell className="border p-2 text-center flex justify-center gap-2">
                   <button
                     onClick={() => handleEdit(todo.id)}
@@ -214,7 +213,6 @@ export default function Report() {
         </Table>
       </div>
 
-      {/* Pagination */}
       <div className="flex flex-wrap justify-center items-center mt-2 gap-2 text-center">
         <button
           className={`btn btn-sm btn-primary ${page === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
