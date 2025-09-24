@@ -261,7 +261,7 @@ export default function UsersData() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center mt-4 gap-2">
+      <div className="flex justify-center items-center text-center mt-4 gap-2">
         <button
           className="btn btn-sm btn-primary"
           disabled={page === 1}
