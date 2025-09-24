@@ -13,12 +13,11 @@ export default function UsersData() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const limit = 7; // items per page
+  const limit = 7;
   const [totalUsers, setTotalUsers] = useState(0);
     const totalPages = Math.ceil(totalUsers / limit);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  // Fetch data from API
   const fetchUsers = async (page) => {
     try {
       setLoading(true);
@@ -28,9 +27,7 @@ export default function UsersData() {
       );
 
     
-      setUsers(response.data);
-
-      
+      setUsers(response.data);      
       setTotalUsers(100);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -43,8 +40,6 @@ export default function UsersData() {
   useEffect(() => {
     fetchUsers(page);
   }, [page]);
-
-
 
   return (
     <div className="p-4">
@@ -75,8 +70,7 @@ export default function UsersData() {
     ))}
   </TableBody>
 </Table>
-          {/* Pagination */}
-          <div className="flex justify-center items-center mt-4 gap-2">
+          <div className="flex justify-center items-center  mt-4  gap-2">
             <button
               className="btn btn-sm btn-primary"
               disabled={page === 1}
