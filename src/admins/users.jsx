@@ -217,7 +217,7 @@ export default function UsersData() {
                 <TableCell className="border p-2 text-center">{user.userId}</TableCell>
                 <TableCell className="border p-2">
                   <div className="flex justify-end items-center gap-2">
-                    {/* Edit */}
+                   
                     {editingId === user.id ? (
                       <button
                         onClick={() => handleSave(user.id)}
@@ -228,24 +228,27 @@ export default function UsersData() {
                     ) : (
                       <button
                         onClick={() => handleEdit(user)}
-                        className="w-10 h-10 flex items-center justify-center border hover:bg-gray-100 rounded-full"
+                        className="w-10 h-10 flex items-center justify-center ms-2  border hover:bg-gray-100 "
+                        style={{borderRadius:"50px"}}
                       >
                         <LuPencilLine className="w-5 h-5" />
                       </button>
                     )}
 
-                    {/* Delete */}
+                 
                     <button
                       onClick={() => handleDelete(user)}
-                      className="w-10 h-10 flex items-center justify-center border hover:bg-gray-100 rounded-full"
+                      className="w-10 h-10 flex items-center justify-center ms-2 border hover:bg-gray-100"
+                      style={{borderRadius:"50px"}}
                     >
                       <AiOutlineDelete className="w-5 h-5" />
                     </button>
 
-                    {/* Preview */}
+              
                     <button
                       onClick={() => handlePreview(user)}
-                      className="w-10 h-10 flex items-center justify-center border hover:bg-gray-100 rounded-full"
+                      className="w-10 h-10 flex items-center justify-center border hover:bg-gray-100 ms-2 mt-2"
+                      style={{borderRadius:"50px"}}
                     >
                       <LuEye className="w-5 h-5" />
                     </button>
