@@ -10,6 +10,7 @@ import ManagerReport from "../manager/mreport";
 import MyProfile from "../user/myprofile";
 import Task from "../user/task";
 
+// Role-based menus
 const RoleMenu = {
   admin: ["Users", "Setting", "Reports"],
   manager: ["Projects", "Team", "Reports"],
@@ -28,12 +29,10 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
   return (
     <>
       <div className={`sidebar ${mobileOpen ? "open" : ""}`}>
-        {/* Role + Menus */}
         <div className="menu-container">
           <h3 className="role-toggle" onClick={() => setOpen(!open)}>
             {currentRole} ▾
           </h3>
-
           {open &&
             menus.map((menu) => (
               <button
@@ -46,7 +45,6 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
             ))}
         </div>
 
-        {/* Logout button */}
         <div className="logout-container">
           <button onClick={onLogout} className="logout-btn">
             <BsBoxArrowUpRight /> Logout
@@ -110,7 +108,7 @@ function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, cl
           border-top: 1px solid #374151;
           display: flex;
           justify-content: center;
-          padding-bottom : 100px;
+          padding-bottom: 100px;
         }
 
         .logout-btn {
@@ -194,7 +192,9 @@ export default function Dashboard({ role, onLogout }) {
         .dashboard-container {
           display: flex;
           min-height: 100vh;
-        }
+          width: 100%;
+          background-color: #f3f4f6
+          }
 
         .mobile-toggle {
           display: inline-block;
@@ -233,6 +233,7 @@ export default function Dashboard({ role, onLogout }) {
 
         .dashboard-inner {
           width: 100%;
+          min-height: calc(100vh - 60px);
           overflow-x: auto;
         }
       `}</style>

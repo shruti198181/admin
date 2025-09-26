@@ -17,7 +17,7 @@ import Task from "./user/task";
 
 export default function App() {
   const handleLogout = () => {
-    window.location.href = "/"; // 👈 goes back to home (only header visible)
+    window.location.href = "/"; 
   };
 
   return (
