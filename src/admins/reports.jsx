@@ -117,7 +117,7 @@ export default function Report() {
         className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700"
         onClick={() => handleSave(todo.id)}
       >
-        <span className="text-lg font-bold">✓</span>
+        <span className="text-lg font-bold text-prrimary">save</span>
       </button>
     ) : (
       <button
