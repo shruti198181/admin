@@ -9,8 +9,7 @@ export default function Login() {
     <div
       className="d-flex justify-content-center align-items-center"
       style={{
-        width: "100vw",
-        height: "100vh",
+        
         backgroundImage :"url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-CuyvM3w4mcCBPjh7L4wHkRqFZkRxZ-scpQ&s')",
           backgroundSize: "cover",
           backgroundPosition: 'center',

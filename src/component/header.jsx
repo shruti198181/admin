@@ -153,9 +153,9 @@ export default function NavbarHeader() {
               {/* Before login: show simple links */}
               {!role && (
                 <>
-                  <Nav.Link as={Link} to="/admin">Admin</Nav.Link>
-                  <Nav.Link as={Link} to="/manager">Manager</Nav.Link>
-                  <Nav.Link as={Link} to="/user">User</Nav.Link>
+                  <Nav.Link as={Link} to="/">Admin</Nav.Link>
+                  <Nav.Link as={Link} to="/">Manager</Nav.Link>
+                  <Nav.Link as={Link} to="/">User</Nav.Link>
                 </>
               )}
 
