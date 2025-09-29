@@ -6,22 +6,21 @@ import LoginForm from "../page/loginform";
 import "../App.css";
 
 export default function NavbarHeader() {
+  
   const [showLogin, setShowLogin] = useState(false);
   const [role, setRole] = useState(null);
   const navigate = useNavigate();
-
   const handleLoginOpen = () => setShowLogin(true);
   const handleLoginClose = () => setShowLogin(false);
-
   const handleLoginSuccess = (selectedRole) => {
     setRole(selectedRole);
     setShowLogin(false);
-
+   
     if (selectedRole === "admin") navigate("/admin");
     if (selectedRole === "manager") navigate("/manager");
     if (selectedRole === "user") navigate("/user");
   };
-
+  
   const handleLogout = () => {
     setRole(null);
     navigate("/");
@@ -55,10 +54,9 @@ export default function NavbarHeader() {
           )}
         </Container>
       </Navbar>
-
       {/* Add spacing below navbar so page content is not hidden */}
       <div style={{ height: "70px" }}></div>
-
+       
       {/* Login Modal */}
       <Modal show={showLogin} onHide={handleLoginClose} centered>
         <Modal.Header closeButton>

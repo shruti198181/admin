@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState, useMemo } from "react";
 import { BsBoxArrowUpRight, BsList } from "react-icons/bs";
@@ -11,14 +10,14 @@ import ManagerReport from "../manager/mreport";
 import MyProfile from "../user/myprofile";
 import Task from "../user/task";
 
-// Role-based menus
+
 const RoleMenu = {
   admin: ["Users", "Setting", "Reports"],
   manager: ["Projects", "Team", "Reports"],
   user: ["My Profile", "Task"],
 };
 
-// Sidebar Component
+
 function AppSidebar({ currentRole, menus, onLogout, onSelectMenu, mobileOpen, closeMobile }) {
   const [open, setOpen] = useState(true);
 
