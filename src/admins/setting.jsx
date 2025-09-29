@@ -25,9 +25,15 @@ export default function PostsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Email validation: must contain "@" and end with ".com"
+  // Email validation: must contain "@" and end with ".com
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.com$/.test(email);
-
+ const validemail = () => {
+      if(formData.email.endsWith(".com") && formData.email.includes("@")){
+        seterror('') 
+      }else{
+        seterror("Please enter valid email id");
+      }
+   }
   const handleLogin = () => {
     if (!loginEmail.trim()) return alert("Enter your email!");
     if (!isValidEmail(loginEmail)) return alert("Invalid email! Must contain '@' and end with '.com'");
@@ -99,7 +105,7 @@ export default function PostsPage() {
     return <p style={{ padding: "20px", textAlign: "center" }}>Loading posts...</p>;
 
   return (
-    <div style={{ maxWidth: "700px",height :"100vh",margin: "0 auto", padding: "20px", }}>
+    <div className=" text-center border-collapse mx-auto" style={{width:"800px"}}>
       <h1 style={{ textAlign: "center", marginBottom: "20px", color: "#d20217" }}>
         Social Feed
       </h1>

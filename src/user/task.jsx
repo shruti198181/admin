@@ -19,7 +19,6 @@ export default function AlbumPhotos() {
   const limit = 10;
 
 
-  
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
@@ -54,7 +53,7 @@ export default function AlbumPhotos() {
       const result = await res.json();
       console.log("Updated photo:", result);
 
-      // Update state
+    
       setPhotos((prev) => prev.map((p) => (p.id === id ? result : p)));
       setEditingId(null);
       setEditTitle("");

@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useState } from "react";
 import {
   Table,
@@ -19,8 +18,7 @@ export default function AlbumPhotos() {
   const currentItems = photos.slice( (page - 1) * limit, page * limit);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-
-  useEffect(() => {
+useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/albums/1/photos")
       .then((res) => res.json())
       .then((data) => {
@@ -34,13 +32,9 @@ export default function AlbumPhotos() {
   if (loading) {
     return <p className="p-4 text-center">Loading photos...</p>;
   }
-
-
-  
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4 text-center">Album Photos</h2>
-
       <Table className="border border-gray-300 text-center border-collapse min-w-[700px] mx-auto">
         <TableHeader>
           <TableRow>
@@ -85,12 +79,10 @@ export default function AlbumPhotos() {
             {p}
           </button>
         ))}
-
         <button
           className={`px-3 py-1 border rounded ${page === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
           disabled={page === totalPages}
-          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-       >
+          onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} >
           Next
         </button>
       </div>
