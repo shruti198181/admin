@@ -18,6 +18,8 @@ export default function AlbumPhotos() {
   const [editTitle, setEditTitle] = useState("");
   const limit = 10;
 
+
+  
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
